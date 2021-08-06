@@ -25,7 +25,15 @@ public class CameraControl : MonoBehaviour
                 pitch -= Input.GetAxis("Mouse Y");
 
                 // Rotation
-                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(pitch, yaw, 0f), rotationSpeed);
+                if(pitch > -20 && pitch <=10)
+                        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(pitch, yaw, 0f), rotationSpeed);
+		else
+		{
+                        if(pitch <= -20)
+                                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(-20f, yaw, 0f), rotationSpeed);
+                        else
+                                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(10f, yaw, 0f), rotationSpeed);
+                }
 
                 // Position
                 transform.position = playerTransform.position + transform.TransformDirection(cameraOffset);

@@ -39,13 +39,15 @@ public class PlayerMovement : MonoBehaviour
 		animator.SetFloat("Forward", charSpace.x);
 		animator.SetFloat("Right", charSpace.z);
 
+		//float keep_y = myCapsule.transform.rotation.y;
+		myCapsule.transform.rotation = cameraTransform.rotation;
+		//myCapsule.transform.rotation = Quaternion.Euler(myCapsule.transform.rotation.x, keep_y, myCapsule.transform.rotation.z);
 		// Fix rotation
 		//if (moveDirection.magnitude > 10e-3f)
 		//{
 		//	player.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(cameraTransform.forward * z_Axis + cameraTransform.right * x_Axis, Vector3.up), Time.deltaTime * rotationSpeed);
 		//}
 
-		player.rotation = cameraTransform.rotation;
 
 		// Jump
 		// See if the player touches the ground ( activate gizmos to see the lines )
