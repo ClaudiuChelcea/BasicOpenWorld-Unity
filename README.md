@@ -1,2 +1,2 @@
-# Unity-project
-Unity project used for learning hands-on using this game engine.
+# 3D-Unity-Game
+Game created in unity used for learning hands-on using this game engine.
