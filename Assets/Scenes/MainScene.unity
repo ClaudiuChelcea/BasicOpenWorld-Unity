@@ -4640,7 +4640,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh22238
+  m_Name: pb_Mesh20076
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -6190,7 +6190,10 @@ MonoBehaviour:
   player_speed: 10
   player: {fileID: 1209038192}
   cameraTransform: {fileID: 2098818395}
-  rotationSpeed: 3
+  rotationSpeed: 5
+  jumpForce: 6
+  myCapsule: {fileID: 1209038189}
+  myTreshhold: 0.5
 --- !u!1 &1234631726
 GameObject:
   m_ObjectHideFlags: 0
