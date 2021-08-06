@@ -3981,11 +3981,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5553b64dfd33b949bda4d182fd3810b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player_speed: 10
+  player_speed: 7
   player: {fileID: 1209038192}
   cameraTransform: {fileID: 2098818395}
   rotationSpeed: 5
-  jumpForce: 6
+  jumpForce: 5
   myCapsule: {fileID: 1209038189}
   myTreshhold: 0.5
 --- !u!1001 &1216680989

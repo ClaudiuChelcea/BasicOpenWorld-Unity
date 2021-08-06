@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
 	public float myTreshhold = 0f;
 	private bool is_on_the_ground = true;
 	Animator animator;
+	Vector3 moveDirection;
 
 	// Start is called before the first frame update
 	void Start()
@@ -30,29 +31,27 @@ public class PlayerMovement : MonoBehaviour
 		// Get input
 		float x_Axis = Input.GetAxis("Horizontal");  // A and D
 		float z_Axis = Input.GetAxis("Vertical");  // W and S
-		Vector3 moveDirection = (cameraTransform.forward * z_Axis + cameraTransform.right * x_Axis).normalized * player_speed;
+		moveDirection = (cameraTransform.forward * z_Axis + cameraTransform.right * x_Axis).normalized * player_speed;
 
 		// Move player
-		var get_actual_velocity = player.velocity.y;
-		// player.velocity = new Vector3(player.velocity.x, get_actual_velocity, player.velocity.z); // Update vertical movement - no longer use it because we use the animator
 		Vector3 charSpace = transform.InverseTransformDirection(moveDirection);
 		animator.SetFloat("Forward", charSpace.x);
 		animator.SetFloat("Right", charSpace.z);
 
-		//float keep_y = myCapsule.transform.rotation.y;
-		myCapsule.transform.rotation = cameraTransform.rotation;
-		//myCapsule.transform.rotation = Quaternion.Euler(myCapsule.transform.rotation.x, keep_y, myCapsule.transform.rotation.z);
-		// Fix rotation
-		//if (moveDirection.magnitude > 10e-3f)
-		//{
-		//	player.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(cameraTransform.forward * z_Axis + cameraTransform.right * x_Axis, Vector3.up), Time.deltaTime * rotationSpeed);
-		//}
-
+		// Player`s rotation
+		myCapsule.transform.rotation = Quaternion.Slerp(myCapsule.transform.rotation, cameraTransform.rotation, 5f);
 
 		// Jump
 		// See if the player touches the ground ( activate gizmos to see the lines )
 		Jump();
 
+	}
+
+	private void OnAnimatorMove()
+	{
+		float get_y = player.velocity.y;
+		player.velocity = moveDirection;
+		player.velocity = new Vector3(moveDirection.x, get_y, moveDirection.z);
 	}
 
 	private void Jump()
