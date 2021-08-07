@@ -32,13 +32,38 @@ public class PlayerMovement : MonoBehaviour
 		MovePlayer();
 
 		// Player`s rotation
-		myCapsule.transform.rotation = Quaternion.Slerp(myCapsule.transform.rotation, cameraTransform.rotation, 5f);
+		PlayerRotation();
 
 		// Sprint if left shift is being held
 		Sprint();
 
 		// Jump & see if the player touches the ground ( activate gizmos to see the lines )
 		Jump();
+
+		// Play attack animation
+		CheckAttack();
+	}
+
+	// Player`s rotation by following camera
+	private void PlayerRotation()
+	{
+		myCapsule.transform.rotation = Quaternion.Slerp(myCapsule.transform.rotation, cameraTransform.rotation, 5f);
+		//myCapsule.transform.rotation = Quaternion.Slerp(myCapsule.transform.rotation, new Quaternion(cameraTransform.rotation.x, cameraTransform.rotation.y, cameraTransform.rotation.z, cameraTransform.rotation.w), 5f);
+	}
+
+	// If the player clicks left mouse button, attack
+	private void CheckAttack()
+	{
+		// Can attack only on the ground
+		if (is_on_the_ground == true)
+		{
+			// Check if the player attacks
+			if (Input.GetButtonDown("Fire1"))
+			{
+				// Slow player when hitting
+				animator.SetTrigger("Punch");
+			}
+		}
 	}
 
 	// Increase speed while holding left shift

@@ -3181,8 +3181,10 @@ MonoBehaviour:
 
     Jump: Space
 
-    Others:
-    In progress..
+    Attack:
+    Left mouse click
+
+    Others: In progress..
 
 '
   m_isRightToLeft: 0
