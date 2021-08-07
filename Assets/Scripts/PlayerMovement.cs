@@ -15,6 +15,8 @@ public class PlayerMovement : MonoBehaviour
 	private bool is_on_the_ground = true;
 	private Animator animator;
 	private Vector3 moveDirection;
+	private AnimatorStateInfo animatorState;
+	private float get_current_speed = 6f;
 
 	// Start is called before the first frame update
 	void Start()
@@ -28,6 +30,12 @@ public class PlayerMovement : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
+		// Update animator`s state
+		animatorState = animator.GetCurrentAnimatorStateInfo(0);
+
+		// Slow the player`s speed if he is attacking
+		SlowPlayerWhenAttacking();
+
 		// Move the player by animation
 		MovePlayer();
 
@@ -42,6 +50,22 @@ public class PlayerMovement : MonoBehaviour
 
 		// Play attack animation
 		CheckAttack();
+
+		// Update speed
+		get_current_speed = player_speed;
+	}
+
+	// Slow the player when the attack animation is playing
+	private void SlowPlayerWhenAttacking()
+	{
+		if (animatorState.IsName("RightPunch") || animatorState.IsName("LeftPunch"))
+		{
+			player_speed = 2;
+		}
+		else
+		{
+			player_speed = get_current_speed;
+		}
 	}
 
 	// Player`s rotation by following camera
