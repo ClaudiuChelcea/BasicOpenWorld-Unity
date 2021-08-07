@@ -21,6 +21,7 @@ public class CameraControl : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
+		// Get user`s mouse input
 		yaw += Input.GetAxis("Mouse X");
 		pitch -= Input.GetAxis("Mouse Y");
 

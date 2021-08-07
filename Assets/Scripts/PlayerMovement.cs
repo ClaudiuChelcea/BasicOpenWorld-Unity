@@ -41,6 +41,7 @@ public class PlayerMovement : MonoBehaviour
 		Jump();
 	}
 
+	// Increase speed while holding left shift
 	private void Sprint()
 	{
 		// Increase speed while holding left shift
@@ -54,6 +55,7 @@ public class PlayerMovement : MonoBehaviour
 		}
 	}
 
+	// Move the player based on user`s input
 	private void MovePlayer()
 	{
 		// Get input
@@ -78,12 +80,20 @@ public class PlayerMovement : MonoBehaviour
 	// Jump & check if we are touching the ground
 	private void Jump()
 	{
-		// Draw line to the ground to see if we are on the ground or not
-		if (is_on_the_ground == true) Debug.DrawRay(player.transform.position, Vector3.down / 5f, Color.green, 2);
-		else Debug.DrawRay(player.transform.position, Vector3.down / 5f, Color.red, 2);
+		// Check if we can jump by raycasting to the ground lines in the shape of our capsule
+		int count_jump = CountIfGrounded();
 
-		// If he touches the ground, you can jump
-		if (Physics.Raycast(new Ray(player.transform.position, Vector3.down), myTreshhold)) // send ray
+		// If at least one part of the character touches the ground, you can jump
+		AddJumpForceIfNeeded(count_jump);
+
+		// For the jump animation
+		JumpAnim();
+	}
+
+	// Set the variable is_on_the_ground & add force based on the number of jumps
+	private void AddJumpForceIfNeeded(int count_jump)
+	{
+		if (count_jump >= 1)
 		{
 			is_on_the_ground = true;
 			if (Input.GetButtonUp("Jump"))
@@ -92,11 +102,15 @@ public class PlayerMovement : MonoBehaviour
 			}
 		}
 		else
-		{ // Otherwise, you can`t jump
+		{
+			// Otherwise, you can`t jump
 			is_on_the_ground = false;
 		}
+	}
 
-		// For the jump animation
+	// Play the jump animation
+	private void JumpAnim()
+	{
 		if (is_on_the_ground)
 		{
 			animator.SetBool("Grounded", true);
@@ -105,5 +119,27 @@ public class PlayerMovement : MonoBehaviour
 		{
 			animator.SetBool("Grounded", false);
 		}
+	}
+
+	// Count in how many spots the player is touching the ground
+	private int CountIfGrounded()
+	{
+		int count_jump = 0;
+		for (float xOffset = -1; xOffset <= 1; ++xOffset)
+		{
+			for (float zOffset = -1; zOffset <= 1; ++zOffset)
+			{
+				if (Physics.Raycast(new Ray(myCapsule.transform.position + (myCapsule.transform.forward * xOffset + myCapsule.transform.right * zOffset).normalized, Vector3.down / 6f), myTreshhold))
+				{
+					Debug.DrawRay(myCapsule.transform.position + (myCapsule.transform.forward * xOffset + myCapsule.transform.right * zOffset).normalized, (Vector3.down * myTreshhold) / 2f, Color.green);
+					count_jump++;
+				}
+				else
+				{
+					Debug.DrawRay(myCapsule.transform.position + (myCapsule.transform.forward * xOffset + myCapsule.transform.right * zOffset).normalized, (Vector3.down * myTreshhold) / 2f, Color.red);
+				}
+			}
+		}
+		return count_jump;
 	}
 }
