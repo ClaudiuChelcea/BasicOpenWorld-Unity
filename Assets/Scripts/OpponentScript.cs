@@ -19,16 +19,19 @@ public class OpponentScript : Fighter
 	// Update is called once per frame
 	void Update()
 	{
+		// Attack the player
 		agent.SetDestination(player_transform.position);
 
 		// Move player
 		SetAnimatorMovement();
 
+		// Slow the enemy when attacking
 		SlowPlayerWhenAttacking();
 
+		// Falling animation
 		Jump();
 
-		if(agent.remainingDistance < 1f)
+		if (agent.remainingDistance < 1f)
 		{
 			animator.SetTrigger("Punch");
 		}
