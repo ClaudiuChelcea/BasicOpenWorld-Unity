@@ -4,27 +4,30 @@ using UnityEngine;
 
 public class PunchTrigger : MonoBehaviour
 {
+	// Variables
 	public string OpponentLayer;
-	//private AnimatorStateInfo get_animator_state;
-	//public Animator get_animator;
+	public int player_health;
+	public int opponent_health;
 
 	// Start is called before the first frame update
 	void Start()
 	{
-		//get_animator = GetComponent<Animator>();
+
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
-		//get_animator_state = get_animator.GetCurrentAnimatorStateInfo(0);
+
 	}
 
 	private void OnTriggerEnter(Collider other)
 	{
-		if(other.gameObject.layer  == LayerMask.NameToLayer(OpponentLayer)) //&& get_animator_state.IsName("Punch"))
+		if(other.gameObject.layer  == LayerMask.NameToLayer(OpponentLayer))
 		{
 			other.GetComponentInParent<Animator>().Play("TakeHit");
+			if(other.GetComponentInParent<Fighter>().GetComponent<Fighter>().health > 0)
+				other.GetComponentInParent<Fighter>().GetComponent<Fighter>().health -= 25;
 		}
 	}
 }

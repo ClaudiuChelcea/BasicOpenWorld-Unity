@@ -5,6 +5,7 @@ using UnityEngine.AI;
 
 public class OpponentScript : Fighter
 {
+	//Variables
 	private NavMeshAgent agent;
 	public Transform player_transform;
 	public bool is_aggressive = true;
@@ -16,6 +17,7 @@ public class OpponentScript : Fighter
 		GetComponents();
 		animator.ResetTrigger("Punch");
 		StartCoroutine(AggressivenessCoroutine(0.8f));
+		health = 100;
 	}
 	
 	// Set opponent`s aggressiveness
@@ -29,6 +31,13 @@ public class OpponentScript : Fighter
 	// Update is called once per frame
 	void Update()
 	{
+		// Get animator state
+		animatorState = animator.GetCurrentAnimatorStateInfo(0);
+
+		// Check if dead
+		if (DeadAnim() == 1)
+			return;
+
 		// Attack the player
 		agent.SetDestination(player_transform.position);
 
@@ -46,16 +55,13 @@ public class OpponentScript : Fighter
 
 		// Get the moving direction
 		moveDirection = agent.velocity.normalized;
-
-		// Get animator state
-		animatorState = animator.GetCurrentAnimatorStateInfo(0);
 	}
 
 	// Attach the player when the distance is little
 	private void AttackPlayerWhenClose()
 	{
 		// Prevent attacking if we are already being attacked
-		if (animatorState.IsName("TakeHit"))
+		if (animatorState.IsName("TakeHit") || enemy.GetComponentInParent<Fighter>().health <= 0)
 			return;
 
 		// Prevent attacking if the distance is too big

@@ -17,6 +17,9 @@ public abstract class Fighter : MonoBehaviour
 	public Transform cameraTransform;
 	public float jumpForce = 0f;
 	public HumanBodyBones leftHand, rightHand;
+	public int health;
+	public GameObject enemy;
+	protected bool end_game = false;
 
 	// Initialise components
 	public void GetComponents()
@@ -116,5 +119,26 @@ public abstract class Fighter : MonoBehaviour
 
 		// For the jump animation
 		JumpAnim();
+	}
+
+	// Check if health
+	public virtual int DeadAnim()
+	{
+		if (health > 0)
+			end_game = false;
+
+		if (end_game == true)
+			return 1;
+
+		if (health <= 0)
+		{
+			end_game = true;
+			animator.Play("DeadAnimation");
+		};
+
+		if (end_game == true)
+			return 1;
+		else
+			return 0;
 	}
 }

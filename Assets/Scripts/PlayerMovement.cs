@@ -6,6 +6,7 @@ public class PlayerMovement : Fighter
 {
 	// Variablees
 	public float rotationSpeed = 0f;
+	private bool want_to_ressurect = false;
 	
 	// Start is called before the first frame update
 	void Start()
@@ -14,11 +15,16 @@ public class PlayerMovement : Fighter
 		GetComponents();
 		player.rotation = cameraTransform.rotation * Quaternion.AngleAxis(270f, new Vector3(0, 1, 0));
 		animator = GetComponent<Animator>();
+		health = 200;
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
+		// Check if dead
+		if (DeadAnim() == 1)
+			return;
+
 		// Update animator`s state
 		animatorState = animator.GetCurrentAnimatorStateInfo(0);
 
@@ -48,6 +54,18 @@ public class PlayerMovement : Fighter
 
 		// Dance
 		DanceAnimation();
+	}
+
+	private void RevivePlayerIfWanted()
+	{
+		if (Input.GetKeyDown(KeyCode.R) && end_game == true)
+		{
+			want_to_ressurect = true;
+			health = 200;
+		}
+
+		if (want_to_ressurect == true)
+			Revive();
 	}
 
 	private void DanceAnimation()
@@ -131,5 +149,43 @@ public class PlayerMovement : Fighter
 		float get_y = player.velocity.y;
 		player.velocity = moveDirection;
 		player.velocity = new Vector3(moveDirection.x, get_y, moveDirection.z);
-	}	
+	}
+
+	// Check if health
+	public override int DeadAnim()
+	{
+		// Ressurect player if it is dead and user presses R key
+		RevivePlayerIfWanted();
+
+		if (health > 0)
+			end_game = false;
+
+		if (end_game == true)
+			return 1;
+
+		if (health <= 0)
+		{
+			end_game = true;
+			animator.Play("DeadAnimation");
+			want_to_ressurect = false;
+		};
+
+		if (end_game == true)
+		{ 
+			return 1;
+			want_to_ressurect = false;
+		}
+		else
+			return 0;
+	}
+
+	// Revive
+	public virtual void Revive()
+	{
+		if (end_game == true)
+		{
+			end_game = false;
+			animator.Play("Resurrection");
+		}
+	}
 }

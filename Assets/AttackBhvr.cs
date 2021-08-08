@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class AttackBhvr : StateMachineBehaviour
 {
+	// Variables
 	public float enableHTBX = 0.256f;
 	public float disableHTBX = 0.565f;
 	public HumanBodyBones attackBone;
@@ -29,16 +30,4 @@ public class AttackBhvr : StateMachineBehaviour
 	{
 
 	}
-
-	// OnStateMove is called right after Animator.OnAnimatorMove()
-	//override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-	//{
-	//    // Implement code that processes and affects root motion
-	//}
-
-	// OnStateIK is called right after Animator.OnAnimatorIK()
-	//override public void OnStateIK(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-	//{
-	//    // Implement code that sets up animation IK (inverse kinematics)
-	//}
 }
