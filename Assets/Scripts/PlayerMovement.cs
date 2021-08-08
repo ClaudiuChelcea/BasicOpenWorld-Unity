@@ -45,6 +45,21 @@ public class PlayerMovement : Fighter
 
 		// Taunt
 		TauntAnimation();
+
+		// Dance
+		DanceAnimation();
+	}
+
+	private void DanceAnimation()
+	{
+		if (Input.GetKeyDown(KeyCode.Y))
+		{
+			animator.SetTrigger("Dance");
+		}
+		if (Input.GetKeyUp(KeyCode.Y))
+		{
+			animator.ResetTrigger("Dance");
+		}
 	}
 
 	private void TauntAnimation()
