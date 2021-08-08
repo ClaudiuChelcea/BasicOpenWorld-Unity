@@ -7,6 +7,7 @@ public class OpponentScript : Fighter
 {
 	private NavMeshAgent agent;
 	public Transform player_transform;
+	public bool is_aggressive = true;
 
 	// Start is called before the first frame update
 	void Start()
@@ -14,6 +15,15 @@ public class OpponentScript : Fighter
 		agent = GetComponent<NavMeshAgent>();
 		GetComponents();
 		animator.ResetTrigger("Punch");
+		StartCoroutine(AggressivenessCoroutine(0.8f));
+	}
+	
+	// Set opponent`s aggressiveness
+	IEnumerator AggressivenessCoroutine(float time)
+	{
+		yield return new WaitForSeconds(2f);
+		is_aggressive = Random.Range(0,3)  !=  0; // Aggressive 3/4 of the time
+		yield return StartCoroutine(AggressivenessCoroutine(1f));
 	}
 
 	// Update is called once per frame
@@ -26,7 +36,7 @@ public class OpponentScript : Fighter
 		SetAnimatorMovement();
 
 		// Slow the enemy when attacking
-		SlowPlayerWhenAttacking();
+		SlowPlayerWhenMakingAction();
 
 		// Falling animation
 		Jump();
@@ -48,7 +58,11 @@ public class OpponentScript : Fighter
 		if (animatorState.IsName("TakeHit"))
 			return;
 
-		if (agent.remainingDistance < 1.2f)
+		// Prevent attacking if the distance is too big
+		if (Vector3.Distance(agent.nextPosition, player_transform.position) > 3f)
+			return;
+
+		else if (agent.remainingDistance < 1.2f && is_aggressive)
 		{
 			animator.SetTrigger("Punch");
 		}

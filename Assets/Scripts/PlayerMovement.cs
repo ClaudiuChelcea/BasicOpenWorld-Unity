@@ -6,10 +6,11 @@ public class PlayerMovement : Fighter
 {
 	// Variablees
 	public float rotationSpeed = 0f;
-
+	
 	// Start is called before the first frame update
 	void Start()
 	{
+		// Time.timeScale = 0.1f; // - Debug
 		GetComponents();
 		player.rotation = cameraTransform.rotation * Quaternion.AngleAxis(270f, new Vector3(0, 1, 0));
 		animator = GetComponent<Animator>();
@@ -22,7 +23,7 @@ public class PlayerMovement : Fighter
 		animatorState = animator.GetCurrentAnimatorStateInfo(0);
 
 		// Slow the player`s speed if he is attacking
-		SlowPlayerWhenAttacking();
+		SlowPlayerWhenMakingAction();
 
 		// Move the player by animation
 		MovePlayer();
@@ -41,6 +42,17 @@ public class PlayerMovement : Fighter
 
 		// Update speed
 		get_current_speed = player_speed;
+
+		// Taunt
+		TauntAnimation();
+	}
+
+	private void TauntAnimation()
+	{
+		if (Input.GetKeyUp(KeyCode.T))
+		{
+			animator.SetTrigger("Taunt");
+		}
 	}
 
 	// Player`s rotation by following camera
@@ -49,7 +61,6 @@ public class PlayerMovement : Fighter
 		if(animatorState.IsName("Punch"))
 			return;
 		myCapsule.transform.rotation = Quaternion.Slerp(myCapsule.transform.rotation, cameraTransform.rotation, 5f);
-		//myCapsule.transform.rotation = Quaternion.Slerp(myCapsule.transform.rotation, new Quaternion(cameraTransform.rotation.x, cameraTransform.rotation.y, cameraTransform.rotation.z, cameraTransform.rotation.w), 5f);
 	}
 
 	// If the player clicks left mouse button, attack

@@ -16,6 +16,7 @@ public abstract class Fighter : MonoBehaviour
 	protected float get_current_speed = 6f;
 	public Transform cameraTransform;
 	public float jumpForce = 0f;
+	public HumanBodyBones leftHand, rightHand;
 
 	// Initialise components
 	public void GetComponents()
@@ -23,17 +24,30 @@ public abstract class Fighter : MonoBehaviour
 		player = GetComponent<Rigidbody>();
 		myCapsule = GetComponent<CapsuleCollider>();
 		animator = GetComponent<Animator>();
+		animator.GetBoneTransform(leftHand).GetComponent<Collider>().enabled = false;
+		animator.GetBoneTransform(rightHand).GetComponent<Collider>().enabled = false;
 	}
 
 	// Slow the player when the attack animation is playing
-	public  void SlowPlayerWhenAttacking()
+	public  void SlowPlayerWhenMakingAction()
 	{
 		if (animatorState.IsName("RightPunch") || animatorState.IsName("LeftPunch"))
 		{
+			get_current_speed = player_speed;
 			player_speed = 2;
 		}
 		else
 		{
+			player_speed = get_current_speed;
+		}
+
+		if ( animatorState.IsName("Taunt") || animatorState.IsName("Dance"))
+		{
+			get_current_speed = player_speed;
+			player_speed = 0;
+		}
+		else
+		{ 
 			player_speed = get_current_speed;
 		}
 	}

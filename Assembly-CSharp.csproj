@@ -65,6 +65,7 @@
     <Compile Include="Assets\Scripts\OpponentScript.cs" />
     <Compile Include="Assets\Scripts\Classes\Fighter.cs" />
     <Compile Include="Assets\Scripts\TestScripts\TestCamera.cs" />
+    <Compile Include="Assets\AttackBhvr.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Text\Shaders\TMPro.cginc" />
