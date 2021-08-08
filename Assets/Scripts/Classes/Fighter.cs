@@ -103,5 +103,4 @@ public abstract class Fighter : MonoBehaviour
 		// For the jump animation
 		JumpAnim();
 	}
-
 }

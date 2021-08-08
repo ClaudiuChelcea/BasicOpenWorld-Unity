@@ -61,9 +61,10 @@
     <Compile Include="Assets\Scripts\Vibrate.cs" />
     <Compile Include="Assets\Scripts\CameraControl.cs" />
     <Compile Include="Assets\Scripts\TestScripts\TestMove.cs" />
-    <Compile Include="Assets\Scripts\TestScripts\TestCamera.cs" />
     <Compile Include="Assets\Scripts\OpponentScript.cs" />
     <Compile Include="Assets\Scripts\Classes\Fighter.cs" />
+    <Compile Include="Assets\Scripts\TestScripts\TestCamera.cs" />
+    <Compile Include="Assets\Scripts\PunchTrigger.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Assets\TextMesh Pro\Shaders\TMPro.cginc" />

@@ -46,6 +46,8 @@ public class PlayerMovement : Fighter
 	// Player`s rotation by following camera
 	private void PlayerRotation()
 	{
+		if(animatorState.IsName("Punch"))
+			return;
 		myCapsule.transform.rotation = Quaternion.Slerp(myCapsule.transform.rotation, cameraTransform.rotation, 5f);
 		//myCapsule.transform.rotation = Quaternion.Slerp(myCapsule.transform.rotation, new Quaternion(cameraTransform.rotation.x, cameraTransform.rotation.y, cameraTransform.rotation.z, cameraTransform.rotation.w), 5f);
 	}
@@ -53,6 +55,10 @@ public class PlayerMovement : Fighter
 	// If the player clicks left mouse button, attack
 	private void CheckAttack()
 	{
+		// Prevent attacking if i am hit
+		if (animatorState.IsName("TakeHit"))
+			return;
+
 		// Can attack only on the ground
 		if (is_on_the_ground == true)
 		{

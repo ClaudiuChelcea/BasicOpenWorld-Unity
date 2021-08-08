@@ -31,17 +31,35 @@ public class OpponentScript : Fighter
 		// Falling animation
 		Jump();
 
-		if (agent.remainingDistance < 1f)
+		// Attack the player if the distance is little
+		AttackPlayerWhenClose();
+
+		// Get the moving direction
+		moveDirection = agent.velocity.normalized;
+
+		// Get animator state
+		animatorState = animator.GetCurrentAnimatorStateInfo(0);
+	}
+
+	// Attach the player when the distance is little
+	private void AttackPlayerWhenClose()
+	{
+		// Prevent attacking if we are already being attacked
+		if (animatorState.IsName("TakeHit"))
+			return;
+
+		if (agent.remainingDistance < 1.2f)
 		{
 			animator.SetTrigger("Punch");
 		}
 	}
 
 	// Charge to the player
-	private void SetAnimatorMovement()
+	void SetAnimatorMovement()
 	{
-		animator.SetFloat("Forward", player_transform.position.x, 0.075f, Time.deltaTime);
-		animator.SetFloat("Right", player_transform.position.z, 0.075f, Time.deltaTime);
+		Vector3 charDirection = transform.InverseTransformDirection(moveDirection);
+		animator.SetFloat("Forward", charDirection.x, 0.075f, Time.deltaTime);
+		animator.SetFloat("Right", charDirection.z, 0.075f, Time.deltaTime);
 	}
 
 	// Count in how many spots the player is touching the ground
@@ -67,7 +85,7 @@ public class OpponentScript : Fighter
 	}
 
 	// Falling
-	private  void Jump()
+	public  override void Jump()
 	{
 		// Check if we can jump by raycasting to the ground lines in the shape of our capsule
 		int count_jump = CountIfGrounded();
