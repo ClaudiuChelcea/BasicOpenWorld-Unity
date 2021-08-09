@@ -17,5 +17,7 @@ Resurrection: R - only if dead
 
 In-game footage:
 
-![Taunt](https://user-images.githubusercontent.com/74200190/128642810-c6757375-17c2-4175-91dc-7b48604ed365.png)
-![FootageCombat](https://user-images.githubusercontent.com/74200190/128642814-a21057ba-8239-447a-b219-351ad5a58e2b.png)
+![Hit](https://user-images.githubusercontent.com/74200190/128734621-a0d8b659-794a-456b-a2d1-675f3392c318.png)
+![GetHit](https://user-images.githubusercontent.com/74200190/128734631-fdd5cea9-92c2-441a-bc70-24a2dc19785b.png)
+![Taunt](https://user-images.githubusercontent.com/74200190/128734652-abd9bfc5-1fc8-4600-9c99-f1e873f560a0.png)
+
