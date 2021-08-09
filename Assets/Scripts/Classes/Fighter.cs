@@ -44,7 +44,7 @@ public abstract class Fighter : MonoBehaviour
 			player_speed = get_current_speed;
 		}
 
-		if ( animatorState.IsName("Taunt") || animatorState.IsName("Dance"))
+		if ( animatorState.IsName("Taunt") || animatorState.IsName("Dance") || animatorState.IsName("DanceContinue"))
 		{
 			get_current_speed = player_speed;
 			player_speed = 0;

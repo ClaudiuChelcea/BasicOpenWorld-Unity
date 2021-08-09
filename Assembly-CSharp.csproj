@@ -62,13 +62,13 @@
     <Compile Include="Assets\Scripts\Vibrate.cs" />
     <Compile Include="Assets\Scripts\CameraControl.cs" />
     <Compile Include="Assets\Scripts\AttackBhvr.cs" />
+    <Compile Include="Assets\Scripts\EnemyHealthBar.cs" />
     <Compile Include="Assets\Scripts\TestScripts\TestMove.cs" />
     <Compile Include="Assets\Scripts\OpponentScript.cs" />
     <Compile Include="Assets\Scripts\Classes\Fighter.cs" />
     <Compile Include="Assets\Scripts\HealthBar.cs" />
     <Compile Include="Assets\Scripts\TestScripts\TestCamera.cs" />
     <Compile Include="Assets\Scripts\DisplayAuxMovement.cs" />
-    <Compile Include="Assets\Scripts\EnemyHealthBar.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Text\Shaders\TMPro.cginc" />

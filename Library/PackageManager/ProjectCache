@@ -5,7 +5,7 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637640226779048219
+      ticks: 637641054873158249
     m_Hash: 1314642553
   m_LockFileStatus:
     m_FilePath: C:/Users/claudiu.chelcea/Desktop/3D-Unity-Game/Packages/packages-lock.json
@@ -13,7 +13,7 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637640226779058229
+      ticks: 637641054873168248
     m_Hash: 2023969438
 m_EmbeddedPackageManifests:
   m_ManifestsStatus: {}

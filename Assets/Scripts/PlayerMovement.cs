@@ -24,7 +24,14 @@ public class PlayerMovement : Fighter
 	{
 		// Check game status
 		if (health <= 0)
+		{
+			if(game_over == false)
+			{
+				get_current_speed = player_speed;
+			}
 			game_over = true;
+			player_speed = 0;
+		}
 
 		// Stop character if it`s dead
 		StopCharacter();
