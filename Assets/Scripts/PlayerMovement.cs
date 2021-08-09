@@ -7,6 +7,7 @@ public class PlayerMovement : Fighter
 	// Variablees
 	public float rotationSpeed = 0f;
 	private bool want_to_ressurect = false;
+	private bool game_over;
 	
 	// Start is called before the first frame update
 	void Start()
@@ -21,6 +22,13 @@ public class PlayerMovement : Fighter
 	// Update is called once per frame
 	void Update()
 	{
+		// Check game status
+		if (health <= 0)
+			game_over = true;
+
+		// Stop character if it`s dead
+		StopCharacter();
+
 		// Check if dead
 		if (DeadAnim() == 1)
 			return;
@@ -56,6 +64,21 @@ public class PlayerMovement : Fighter
 		DanceAnimation();
 	}
 
+	// Stop character`s movement
+	private void StopCharacter()
+	{
+		if (animatorState.IsName("DeadAnimation") || game_over == true)
+		{
+			get_current_speed = player_speed;
+			player_speed = 0;
+		}
+		else
+		{
+			player_speed = get_current_speed;
+		}
+	}
+
+	// Revive player if dead and presses R
 	private void RevivePlayerIfWanted()
 	{
 		if (Input.GetKeyDown(KeyCode.R) && end_game == true)
@@ -68,6 +91,7 @@ public class PlayerMovement : Fighter
 			Revive();
 	}
 
+	// Play dance animation
 	private void DanceAnimation()
 	{
 		if (Input.GetKeyDown(KeyCode.Y))
@@ -80,6 +104,7 @@ public class PlayerMovement : Fighter
 		}
 	}
 
+	// Play taunt animation
 	private void TauntAnimation()
 	{
 		if (Input.GetKeyUp(KeyCode.T))
@@ -186,6 +211,8 @@ public class PlayerMovement : Fighter
 		{
 			end_game = false;
 			animator.Play("Resurrection");
+			player_speed = 6;
+			get_current_speed = 6;
 		}
 	}
 }

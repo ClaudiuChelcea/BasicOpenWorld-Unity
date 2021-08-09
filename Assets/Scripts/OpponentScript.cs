@@ -9,6 +9,7 @@ public class OpponentScript : Fighter
 	private NavMeshAgent agent;
 	public Transform player_transform;
 	public bool is_aggressive = true;
+	private bool game_over = false;
 
 	// Start is called before the first frame update
 	void Start()
@@ -35,6 +36,8 @@ public class OpponentScript : Fighter
 		animatorState = animator.GetCurrentAnimatorStateInfo(0);
 
 		// Check if dead
+		if (health <= 0)
+			game_over = true;
 		if (DeadAnim() == 1)
 			return;
 
@@ -116,5 +119,28 @@ public class OpponentScript : Fighter
 			is_on_the_ground = true;
 
 		JumpAnim();
+	}
+
+	// Check if health
+	public override int DeadAnim()
+	{
+		if (game_over == true)
+		{
+			animator.Play("DeadAnimation");
+			this.gameObject.GetComponent<CapsuleCollider>().enabled = false;
+			this.gameObject.GetComponentInParent<MeshRenderer>().enabled = false;
+			return 1;
+		}
+
+		if(health <= 0)
+		{
+			animator.Play("DeadAnimation");
+			game_over = true;
+			return 1;
+		}
+		else
+		{
+			return 0;
+		}
 	}
 }
