@@ -1,7 +1,7 @@
 # 3D-Unity-Game
 Game created in unity used for learning hands-on using this game engine.
 
-Game type: 3D
+Game type: 3D<br>
 Enemy: NavMeshAgent AI that attacks and kills the player if it deals enough damage. You can also kill it.
 
 Inputs:
