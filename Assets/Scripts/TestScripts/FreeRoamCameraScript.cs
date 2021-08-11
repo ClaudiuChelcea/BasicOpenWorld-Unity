@@ -8,35 +8,28 @@ using UnityEngine;
  * Movement with WASD
  * Rotation with mouse
  * Up and down  via mouse rotation and WASD or with E & Q keys ( press / hold )
- * Sprint: LeftShift (h0ld)
- * Slow: CapsLock (hold) or F
- * ExtraSlow: Tab ( hold ) or G
+ * Sprint: LeftShift (keypress)
+ * Slow: CapsLock / F (keypress)
+ * ExtraSlow: Tab / G (keypress)
+ * Default movement speed: R (keypress)
  */
 
 public class FreeRoamCameraScript : MonoBehaviour
 {
-        // Variables
-        public float CameraRotationSpeed = 0f;
-        public float CameraDefaultMovementSpeed = 0f;
+	// Variables
+	public float CameraRotationSpeed = 0f;
 	public float CameraGoUpSpeed = 0f;
 	private float CameraUpStepDistance = 0;
 	public float CameraRotationFluidity = 0f;
 	public float GroundOffset = 0f;
 	private float Move_X = 0f, Move_Z = 0f;
-	private Vector3 moveDirection =new  Vector3(0,0,0);
-
-	// For sprint
-	private float get_current_speed_1 = 0f;
-	private bool is_moving_slow = true;
-
-	// For slow movement
-	private float get_current_speed_2 = 0f;
-	private bool is_moving_fast = true;
-
-	// For extra slow movement
-	private float get_current_speed_3 = 0f;
-	private float extra_slow = 0.35f;
-	private bool is_extra_slow = false;
+	private Vector3 moveDirection = new Vector3(0, 0, 0);
+	float default_Speed = 0f;
+	public float extra_Slow_Speed = 0f;
+	public float slow_Speed = 0f;
+	public float base_Speed = 0f;
+	public float fast_Speed = 0f;
+	public float Display_Camera_Speed = 0f;
 
 	// For rotation
 	private float yaw = 0;
@@ -47,6 +40,8 @@ public class FreeRoamCameraScript : MonoBehaviour
         {
 		// The position the camera starts
                 transform.position = new Vector3(0, GroundOffset, 0);
+		default_Speed = base_Speed;
+		Display_Camera_Speed = default_Speed;
         }
 
         // Update is called once per frame
@@ -68,9 +63,13 @@ public class FreeRoamCameraScript : MonoBehaviour
 		Sprint();
 		MoveSlow();
 		ExtraSlow();
+		ResetSpeed();
 
 		// Adjust camera`s height
 		ChangeHeight();
+
+		// Update displayed camera speed
+		Display_Camera_Speed = default_Speed;
 	}
 
 	// Add / subtract from camera`s y position
@@ -82,63 +81,42 @@ public class FreeRoamCameraScript : MonoBehaviour
 	// Recalculate move direction
 	private void CalculateMoveDirection()
 	{
-		moveDirection += (transform.forward * Move_Z + transform.right * Move_X).normalized * CameraDefaultMovementSpeed;
+		moveDirection += (transform.forward * Move_Z + transform.right * Move_X).normalized * default_Speed;
 	}
 
 	// Move the camera extra slow - for building interiors
 	private void ExtraSlow()
 	{
-		if (Input.GetKeyDown(KeyCode.Tab) || Input.GetKeyDown(KeyCode.G))
+		if (Input.GetKey(KeyCode.Tab) || Input.GetKey(KeyCode.G))
 		{
-			if (is_extra_slow == false)
-				get_current_speed_3 = CameraDefaultMovementSpeed;
-
-			is_extra_slow = true;
-			CameraDefaultMovementSpeed = extra_slow;
+			default_Speed = extra_Slow_Speed; 
 		}
+	}
 
-		if (Input.GetKeyUp(KeyCode.Tab) || Input.GetKeyUp(KeyCode.G))
+	// Set the camera`s speed to the default speed
+	private void ResetSpeed()
+	{
+		if(Input.GetKey(KeyCode.R))
 		{
-			is_extra_slow = false;
-			CameraDefaultMovementSpeed = get_current_speed_1;
+			default_Speed = base_Speed; ;
 		}
 	}
 
 	// Move camera slow - for walking
 	private void MoveSlow()
 	{
-		if (Input.GetKeyDown(KeyCode.CapsLock) || Input.GetKeyDown(KeyCode.F))
+		if (Input.GetKey(KeyCode.CapsLock) || Input.GetKey(KeyCode.F))
 		{
-			if (is_moving_fast == true)
-				get_current_speed_2 = CameraDefaultMovementSpeed;
-
-			is_moving_fast = false;
-			CameraDefaultMovementSpeed = get_current_speed_1 / (float)4;
-		}
-
-		if (Input.GetKeyUp(KeyCode.CapsLock) || Input.GetKeyUp(KeyCode.F))
-		{
-			is_moving_fast = false;
-			CameraDefaultMovementSpeed = get_current_speed_1;
+			default_Speed = slow_Speed;
 		}
 	}
 
 	// Move camera fast - for map traversal
 	private void Sprint()
 	{
-		if (Input.GetKeyDown(KeyCode.LeftShift))
+		if (Input.GetKey(KeyCode.LeftShift))
 		{
-			if (is_moving_slow == true)
-				get_current_speed_1 = CameraDefaultMovementSpeed;
-
-			is_moving_slow = false;
-			CameraDefaultMovementSpeed = get_current_speed_1 * 2;
-		}
-
-		if (Input.GetKeyUp(KeyCode.LeftShift))
-		{
-			is_moving_slow = true;
-			CameraDefaultMovementSpeed = get_current_speed_1;
+			default_Speed = fast_Speed;
 		}
 	}
 
